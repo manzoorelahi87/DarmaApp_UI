@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="button-wrapper">
+        <button class="btn btn-primary">Create Profile</button> &nbsp;
+        <button class="btn btn-primary">Update Profile</button> &nbsp;
+        <button class="btn btn-primary">Delete Profile</button>
+    </div>
+    <div>
+        <form [formGroup]="profileForm" (ngSubmit)="createProfile()">
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="firstName" [disabled]=disableProfile placeholder="First Name">
+            </div>
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="lastName" [disabled]=disableProfile placeholder="Last Name">
+            </div>
+            <div class="col-lg-6 mt-2">
+                <input type="textarea" class="form-control" formControlName="address" [disabled]=disableProfile placeholder="Address Details">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <!-- <input type="text" class="form-control" formControlName="associationUnit" [disabled]=disableProfile placeholder="Select Unit"> -->
+                <select class="form-select" formControlName="associationUnit"  >
+                    <option selected>Select Unit</option>
+                    <option value="1">Kochi</option>
+                    <option value="2">Trivandrum</option>
+                    <option value="3">Calicut</option>
+                  </select>
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="mobileNo" [disabled]=disableProfile placeholder="Enter Mobile number">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="landlineCode" [disabled]=disableProfile placeholder="STD code">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="landlineNo" [disabled]=disableProfile placeholder="Landline number">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="email" class="form-control" formControlName="email" [disabled]=disableProfile placeholder="abc@gmail.com">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="dateOfBirth" [disabled]=disableProfile placeholder="Date of Birth">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="text" class="form-control" formControlName="spouseName" [disabled]=disableProfile placeholder="Spouse Name">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <!-- <input type="text" class="form-control" formControlName="spouseDOB" [disabled]=disableProfile placeholder="Spouse Date of Birth"> -->
+
+                <ngb-datepicker class="form-control" formControlName="spouseDOB" placeholder="Spouse Date of Birth" (navigate)="date = $event.next"></ngb-datepicker>
+
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="number" class="form-control" formControlName="maleChildren" [disabled]=disableProfile placeholder="Male">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="number" class="form-control" formControlName="femaleChildren" [disabled]=disableProfile placeholder="Female">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="file" class="form-control" formControlName="profilePhoto" [disabled]=disableProfile placeholder="Browse">
+            </div>
+
+            <div class="col-lg-6 mt-2">
+                <input type="texarea" class="form-control" formControlName="notes" [disabled]=disableProfile placeholder="Remarks if any">
+            </div>
+
+            <div class="col-lg-6 mt-2"  >
+                <button class="btn btn-sm btn-primary">Save</button>
+            </div>
+            <div class="col-lg-6 mt-2"  >
+                <button class="btn btn-sm btn-info">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
