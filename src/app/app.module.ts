@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ContactComponent } from './contact/contact.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MembersComponent } from './members/members.component';
+import { MemberService } from './member.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReadComponent,
     HomeComponent,
     ProfileComponent,
-    ContactComponent
+    ContactComponent,
+    MembersComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [UserService],
+  providers: [UserService, MemberService], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

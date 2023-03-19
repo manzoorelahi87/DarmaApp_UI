@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContactComponent } from './contact/contact.component';
 import { CreateComponent } from './create/create.component';
 import { HomeComponent } from './home/home.component';
+import { MembersComponent } from './members/members.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ReadComponent } from './read/read.component';
 
@@ -12,8 +13,10 @@ const routes: Routes = [
   {path:'user/:id', component:CreateComponent},
   {path:'read', component:ReadComponent},
   {path:'profile', component:ProfileComponent},
+  {path:'profile/:id', component:ProfileComponent},
   {path:'home', component:HomeComponent},
-  {path:'contact', component:ContactComponent}
+  {path:'contact', component:ContactComponent},
+  {path:'members', component:MembersComponent},
 ];
 
 @NgModule({
