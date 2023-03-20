@@ -4,7 +4,7 @@
         <button class="btn btn-primary" (click)="updateProfile()">Update Profile</button> &nbsp;       
     </div>
     <div>
-        <form [formGroup]="profileForm" (ngSubmit)="createUser()">
+        <form [formGroup]="profileForm" >
             <div class="col-lg-6 mt-2">
                 <input type="text" class="form-control" formControlName="firstName"  placeholder="First Name"  >
             </div>
@@ -84,10 +84,15 @@
             </div>
 
             <div class="col-lg-6 mt-2"  >
-                <button class="btn btn-sm btn-primary">Save</button>
+                <button class="btn btn-sm btn-primary" (click)="createUser()">Save</button>
             </div>
+
             <div class="col-lg-6 mt-2"  >
-                <button class="btn btn-sm btn-info">Reset</button>
+                <button class="btn btn-sm btn-primary" (click)="updateUserProfile()">Update</button>
+            </div>
+
+            <div class="col-lg-6 mt-2"  >
+                <button class="btn btn-sm btn-info" (click)="resetProfile()">Reset</button>
             </div>
         </form>
     </div>

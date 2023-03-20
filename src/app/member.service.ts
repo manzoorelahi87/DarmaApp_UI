@@ -9,7 +9,7 @@ export class MemberService {
 
   constructor(private http:HttpClient) { }
 
-  apiUrl= "http://locahost:3000/"
+  apiUrl= "http://localhost:3000"
 
 
   createProfile(data:any):Observable<any>{
@@ -32,7 +32,7 @@ export class MemberService {
   }
 
   getMemberDetails():Observable<any>{
-    return this.http.get(`${this.apiUrl}/profile`);
+    return this.http.get(`${this.apiUrl}/members`);
   }
 
 }

@@ -16,6 +16,8 @@ import { ContactComponent } from './contact/contact.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MembersComponent } from './members/members.component';
 import { MemberService } from './member.service';
+import { SignupComponent } from './users/signup/signup.component';
+import { LoginComponent } from './users/login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { MemberService } from './member.service';
     HomeComponent,
     ProfileComponent,
     ContactComponent,
-    MembersComponent
+    MembersComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
