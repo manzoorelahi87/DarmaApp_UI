@@ -18,6 +18,8 @@ import { MembersComponent } from './members/members.component';
 import { MemberService } from './member.service';
 import { SignupComponent } from './users/signup/signup.component';
 import { LoginComponent } from './users/login/login.component';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,7 @@ import { LoginComponent } from './users/login/login.component';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [UserService, MemberService], 
+  providers: [UserService, MemberService, AuthService, AuthGuard], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

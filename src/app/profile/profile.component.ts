@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { MemberService } from '../member.service';
 
 @Component({
@@ -12,35 +13,55 @@ export class ProfileComponent implements OnInit {
 
   disableProfile = true;
   getParamId: any;
+  minDate: any;
+  maxDate: any;
+  getID: any;
+  disableCreateButton;
+  disableUpdateButton;
+  @ViewChild('dp1') dp1: NgbInputDatepicker;
 
   constructor(private router: ActivatedRoute, private memberService: MemberService) {
-
   }
 
   ngOnInit() {
     this.disableFields();
+    this.maxDate = { year: new Date().getFullYear(), month: 12, day: 31 }
+
     this.getParamId = this.router.snapshot.paramMap.get('id');
     if (this.getParamId) {
-      this.memberService.getMyProfile(this.getParamId).subscribe((res) => {
-        this.profileForm.patchValue({
-          'firstName': res.data[0].firstname,
-          'lastName': res.data[0].lastname,
-          'address': res.data[0].mobile,
-          'associationUnit': res.data[0].unit,
-          'mobileNo': res.data[0].mobile,
-          'landlineCode': res.data[0].landcode,
-          'landlineNo': res.data[0].landline,
-          'email': res.data[0].email,
-          'dateOfBirth': res.data[0].dob,
-          'spouseName': res.data[0].spouse,
-          'spouseDOB': res.data[0].sdob,
-          'maleChildren': res.data[0].male,         
-          'femaleChildren': res.data[0].female,
-          'profilePhoto': res.data[0].photo.data[0],
-          'notes': res.data[0].notes
-        });
-      });
+      this.userPatchValue(this.getParamId);
+      this.disableUpdateButton = false;
+      this.disableCreateButton = true;
     }
+    else {
+      let email = localStorage.getItem('email');
+      if (email !== 'admin@gmail.com') {
+        let data = {
+          'email': email
+        }
+        this.memberService.searchMyProfile(data).subscribe((res) => {
+          console.log(res);
+          this.getID = res.data[0].id;
+          if (this.getID > 0) {
+            this.userPatchValue(this.getID);
+            this.disableUpdateButton = false;
+            this.disableCreateButton = true;
+          }
+          else {
+            this.disableUpdateButton = true;
+            this.disableCreateButton = false;
+          }
+        }, (err) => {
+          this.disableUpdateButton = true;
+          this.disableCreateButton = false;
+        });
+      }
+      else {
+        this.disableUpdateButton = true;
+        this.disableCreateButton = false;
+      }
+    }
+
   }
 
   profileForm = new FormGroup({
@@ -113,14 +134,37 @@ export class ProfileComponent implements OnInit {
     this.enableFields();
   }
 
-  updateUserProfile(){
-    this.memberService.updateProfile(this.profileForm.value,this.getParamId ).subscribe((res)=>{
+  updateUserProfile() {
+    this.memberService.updateProfile(this.profileForm.value, this.getParamId).subscribe((res) => {
       console.log(res.message);
     });
   }
 
-  resetProfile(){
+  resetProfile() {
     this.profileForm.reset();
+  }
+
+  userPatchValue(id: any) {
+
+    this.memberService.getMyProfile(id).subscribe((res) => {
+      this.profileForm.patchValue({
+        'firstName': res.data[0].firstname,
+        'lastName': res.data[0].lastname,
+        'address': res.data[0].mobile,
+        'associationUnit': res.data[0].unit,
+        'mobileNo': res.data[0].mobile,
+        'landlineCode': res.data[0].landcode,
+        'landlineNo': res.data[0].landline,
+        'email': res.data[0].email,
+        'dateOfBirth': res.data[0].dob,
+        'spouseName': res.data[0].spouse,
+        'spouseDOB': res.data[0].sdob,
+        'maleChildren': res.data[0].male,
+        'femaleChildren': res.data[0].female,
+        'profilePhoto': res.data[0].photo.data[0],
+        'notes': res.data[0].notes
+      });
+    });
   }
 
 }

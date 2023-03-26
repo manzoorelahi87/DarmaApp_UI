@@ -1,7 +1,11 @@
-.floatright{
-float:left;
+.floatright {
+    float: left;
 }
 
-.floatleft{
-float:right;
+.floatleft {
+    float: right;
+}
+
+.container-top {
+    margin-top: 80px;    
 }

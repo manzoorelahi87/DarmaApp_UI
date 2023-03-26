@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent {
 
-  constructor( private router: Router) {}
+  constructor( private router: Router, private service:LoginService) {}
   errmsg: any;
   errmsgshow = false;
 
@@ -27,15 +28,15 @@ export class SignupComponent {
       this.errmsgshow = false;
 
       // callapi signup
-      // this.service.signup(this.signupForm.value).subscribe((res) => {
-      //   console.log(res, 'res##');
-      //   if (res.status == true) {
-      //     this.router.navigate(['login']);
-      //   } else {
-      //     this.errmsgshow = true;
-      //     this.errmsg = res.msg;
-      //   }
-      // });
+      this.service.signup(this.signupForm.value).subscribe((res) => {
+        console.log(res, 'res##');
+        if (res.status == true) {
+          this.router.navigate(['login']);
+        } else {
+          this.errmsgshow = true;
+          this.errmsg = res.msg;
+        }
+      });
     } else {
       this.errmsgshow = true;
       this.errmsg = 'All field required !!';

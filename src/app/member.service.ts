@@ -35,4 +35,8 @@ export class MemberService {
     return this.http.get(`${this.apiUrl}/members`);
   }
 
+  searchMyProfile(data:any):Observable<any>{
+    return this.http.post(`${this.apiUrl}/members/search`, data);
+  }
+
 }
