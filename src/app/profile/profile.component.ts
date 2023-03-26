@@ -18,13 +18,38 @@ export class ProfileComponent implements OnInit {
   getID: any;
   disableCreateButton;
   disableUpdateButton;
+  errmsg: any;
+  errmsgshow = false;
+  successmsg: any;
+  successmsgshow = false;
+
+  
+
+  profileForm = new FormGroup({
+    'firstName': new FormControl('', Validators.required),
+    'lastName': new FormControl('', Validators.required),
+    'address': new FormControl('', Validators.required),
+    'associationUnit': new FormControl('', Validators.required),
+    'mobileNo': new FormControl('', [Validators.required, Validators.max(10)]),
+    'landlineCode': new FormControl('', Validators.required),
+    'landlineNo': new FormControl('', Validators.required),
+    'email': new FormControl('', [Validators.required,Validators.email]),
+    'dateOfBirth': new FormControl('', Validators.required),
+    'spouseName': new FormControl('', Validators.required),
+    'spouseDOB': new FormControl('', Validators.required),
+    'maleChildren': new FormControl('', Validators.required),
+    'femaleChildren': new FormControl('', Validators.required),
+    'profilePhoto': new FormControl('', Validators.required),
+    'notes': new FormControl('', Validators.required),
+  });
+
   @ViewChild('dp1') dp1: NgbInputDatepicker;
 
   constructor(private router: ActivatedRoute, private memberService: MemberService) {
   }
 
   ngOnInit() {
-    this.disableFields();
+    this.enableFields();
     this.maxDate = { year: new Date().getFullYear(), month: 12, day: 31 }
 
     this.getParamId = this.router.snapshot.paramMap.get('id');
@@ -52,6 +77,9 @@ export class ProfileComponent implements OnInit {
             this.disableCreateButton = false;
           }
         }, (err) => {
+
+          this.errmsgshow = true;
+          this.errmsg = err;
           this.disableUpdateButton = true;
           this.disableCreateButton = false;
         });
@@ -63,24 +91,6 @@ export class ProfileComponent implements OnInit {
     }
 
   }
-
-  profileForm = new FormGroup({
-    'firstName': new FormControl('', Validators.required),
-    'lastName': new FormControl('', Validators.required),
-    'address': new FormControl('', Validators.required),
-    'associationUnit': new FormControl('', Validators.required),
-    'mobileNo': new FormControl('', Validators.required),
-    'landlineCode': new FormControl('', Validators.required),
-    'landlineNo': new FormControl('', Validators.required),
-    'email': new FormControl('', Validators.required),
-    'dateOfBirth': new FormControl('', Validators.required),
-    'spouseName': new FormControl('', Validators.required),
-    'spouseDOB': new FormControl('', Validators.required),
-    'maleChildren': new FormControl('', Validators.required),
-    'femaleChildren': new FormControl('', Validators.required),
-    'profilePhoto': new FormControl('', Validators.required),
-    'notes': new FormControl('', Validators.required),
-  });
 
   disableFields() {
     this.profileForm.get('firstName')?.disable();
@@ -125,7 +135,11 @@ export class ProfileComponent implements OnInit {
   createUser() {
     console.log(this.profileForm.value);
     this.memberService.createProfile(this.profileForm.value).subscribe((res) => {
-      console.log(res.message);
+      this.successmsg = res.message;
+      this.successmsgshow = true;
+    }, (err)=>{
+      this.errmsg = err;
+      this.errmsgshow = true;
     });
     this.profileForm.reset();
   }
@@ -135,8 +149,12 @@ export class ProfileComponent implements OnInit {
   }
 
   updateUserProfile() {
-    this.memberService.updateProfile(this.profileForm.value, this.getParamId).subscribe((res) => {
-      console.log(res.message);
+    this.memberService.updateProfile(this.profileForm.value, this.getID).subscribe((res) => {
+      this.successmsg = res.message;
+      this.successmsgshow = true;
+    }, (err)=>{
+      this.errmsg = err;
+      this.errmsgshow = true;
     });
   }
 
@@ -161,7 +179,7 @@ export class ProfileComponent implements OnInit {
         'spouseDOB': res.data[0].sdob,
         'maleChildren': res.data[0].male,
         'femaleChildren': res.data[0].female,
-        'profilePhoto': res.data[0].photo.data[0],
+       
         'notes': res.data[0].notes
       });
     });

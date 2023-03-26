@@ -1,11 +1,21 @@
 <div class="container">
     <div class="button-wrapper">
-        <button class="btn btn-primary" [disabled]="disableCreateButton" (click)="createProfile()">Create Profile</button> &nbsp;
-        <button class="btn btn-primary" [disabled]="disableUpdateButton" (click)="updateProfile()">Update Profile</button> &nbsp;
+        <!-- <button class="btn btn-primary" [disabled]="disableCreateButton" (click)="createProfile()">Create Profile</button> &nbsp;
+        <button class="btn btn-primary" [disabled]="disableUpdateButton" (click)="updateProfile()">Update Profile</button> &nbsp; -->
+        <h3 *ngIf="!disableCreateButton"> Create Profile</h3>
+        <h3  *ngIf="!disableUpdateButton"> Update Profile</h3>
     </div>
+    <hr/>
 <br>
+
     <div class="form-wrapper">
         <form [formGroup]="profileForm">
+            <div *ngIf="errmsgshow">
+                <p class="text-danger">{{ errmsg }}</p>
+              </div>
+              <div *ngIf="successmsgshow">
+                <p class="text-primary">{{ successmsg }}</p>
+              </div>
             <div class="col-lg-6 mt-2">
                 <label for="firstName" class="form-label">First Name</label>
                 <input id="firstName" type="text" class="form-control" formControlName="firstName"
@@ -116,8 +126,8 @@
             </div>
 
             <div class="col-lg-6 mt-2">
-                <button class="btn btn-sm btn-primary" (click)="createUser()">Save</button> &nbsp;
-                <button class="btn btn-sm btn-primary" (click)="updateUserProfile()">Update</button>&nbsp;
+                <button class="btn btn-sm btn-primary mr-3" *ngIf="!disableCreateButton" (click)="createUser()">Save</button> 
+                <button class="btn btn-sm btn-primary mr-3" *ngIf="!disableUpdateButton" (click)="updateUserProfile()">Update</button>
                 <button class="btn btn-sm btn-info" (click)="resetProfile()">Reset</button>
             </div>
 
