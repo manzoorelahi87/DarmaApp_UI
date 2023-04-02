@@ -7,3 +7,21 @@ label{
     border:1px solid grey;
     border-radius: 5px;;
 }
+
+.right-align{
+    float:right;
+    margin-right:40px;
+    margin-top:10px;
+}
+
+#saveBtn{
+margin-right:3px;
+}
+
+#updateBtn{
+    margin-right:3px;
+}
+
+#resetBtn{
+    margin-right:3px;
+}

@@ -11,8 +11,10 @@ import { LoginService } from '../login.service';
 export class SignupComponent {
 
   constructor( private router: Router, private service:LoginService) {}
-  errmsg: any;
-  errmsgshow = false;
+  errMsg: any;
+  errMsgShow = false;
+  successMsg: any;
+  successMsgShow = false;
 
   signupForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -25,7 +27,7 @@ export class SignupComponent {
   signupSubmit() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value, 'signuform###');
-      this.errmsgshow = false;
+      this.errMsgShow = false;
 
       // callapi signup
       this.service.signup(this.signupForm.value).subscribe((res) => {
@@ -33,14 +35,19 @@ export class SignupComponent {
         if (res.status == true) {
           this.router.navigate(['login']);
         } else {
-          this.errmsgshow = true;
-          this.errmsg = res.msg;
+          this.errMsgShow = true;
+          this.errMsg = res.msg;
         }
       });
     } else {
-      this.errmsgshow = true;
-      this.errmsg = 'All field required !!';
+      this.errMsgShow = true;
+      this.errMsg = 'All fields required !!';
     }
+  }
+
+  dismissMsg() {
+    this.errMsgShow = false;
+    this.successMsgShow = false;
   }
 
 }

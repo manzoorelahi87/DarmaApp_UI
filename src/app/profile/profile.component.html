@@ -3,33 +3,47 @@
         <!-- <button class="btn btn-primary" [disabled]="disableCreateButton" (click)="createProfile()">Create Profile</button> &nbsp;
         <button class="btn btn-primary" [disabled]="disableUpdateButton" (click)="updateProfile()">Update Profile</button> &nbsp; -->
         <h3 *ngIf="!disableCreateButton"> Create Profile</h3>
-        <h3  *ngIf="!disableUpdateButton"> Update Profile</h3>
+        <h3 *ngIf="!disableUpdateButton"> Update Profile</h3>
     </div>
-    <hr/>
-<br>
+    <hr />
+    <br>
+
+    <button *ngIf="loader" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Data Calling...
+    </button>
+
+
 
     <div class="form-wrapper">
         <form [formGroup]="profileForm">
-            <div *ngIf="errmsgshow">
-                <p class="text-danger">{{ errmsg }}</p>
-              </div>
-              <div *ngIf="successmsgshow">
-                <p class="text-primary">{{ successmsg }}</p>
-              </div>
+            <div class="alert alert-success  alert-dismissible" *ngIf="successMsgShow" role="alert">
+                {{successMsg}}
+                <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            <div class="alert alert-danger  alert-dismissible" *ngIf="errMsgShow" role="alert">
+                {{errMsg}}
+                <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            <div class="mb-3 right-align">
+                <small><em>All fields marked with * are mandatory</em></small>
+            </div>
             <div class="col-lg-6 mt-2">
-                <label for="firstName" class="form-label">First Name</label>
+                <label for="firstName" class="form-label">First Name*</label>
                 <input id="firstName" type="text" class="form-control" formControlName="firstName"
                     placeholder="First Name">
             </div>
             <div class="col-lg-6 mt-2">
-                <label for="lastName" class="form-label">Last Name</label>
+                <label for="lastName" class="form-label">Last Name*</label>
                 <input id="lastName" type="text" class="form-control" formControlName="lastName"
                     placeholder="Last Name">
             </div>
             <div class="col-lg-6 mt-2">
                 <label for="address" class="form-label">Address</label>
-                <textarea id="address" class="form-control" formControlName="address"
-                style="height: 100px" placeholder="Address Details"></textarea>
+                <textarea id="address" class="form-control" formControlName="address" style="height: 100px"
+                    placeholder="Address Details"></textarea>
             </div>
 
             <div class="col-lg-6 mt-2">
@@ -37,14 +51,15 @@
                 <select id="associationUnit" class="form-select" aria-label="Default select example"
                     formControlName="associationUnit">
                     <option value="">Select Unit</option>
-                    <option value="1">Kochi</option>
-                    <option value="2">Trivandrum</option>
-                    <option value="3">Calicut</option>
+                    <option value="Kochi">Kochi</option>
+                    <option value="Trivandrum">Trivandrum</option>
+                    <option value="Calicut">Calicut</option>
+                    <option value="Thrissur">Thrissur</option>
                 </select>
             </div>
 
             <div class="col-lg-6 mt-2">
-                <label for="mobileNumber" class="form-label">Mobile No:</label>
+                <label for="mobileNumber" class="form-label">Mobile No:*</label>
                 <input id="mobileNumber" type="text" class="form-control" formControlName="mobileNo"
                     placeholder="Enter Mobile number">
             </div>
@@ -66,7 +81,7 @@
             </div>
 
             <div class="col-lg-6 mt-2">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">Email*</label>
                 <input id="email" type="email" class="form-control" formControlName="email" placeholder="abc@gmail.com">
             </div>
 
@@ -76,8 +91,8 @@
                     <input class="form-control" placeholder="YYYY-MM-DD" formControlName="dateOfBirth"
                         [maxDate]="maxDate" [minDate]="{year: 1900, month: 1, day: 1}" ngbDatepicker
                         #d="ngbDatepicker" />
-                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
-                        class="fa fa-calendar" style="color:rgb(13, 13, 14);"></i></button>
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><i
+                            class="fa fa-calendar" style="color:rgb(13, 13, 14);"></i></button>
                 </div>
             </div>
 
@@ -121,14 +136,16 @@
 
             <div class="col-lg-6 mt-2">
                 <label for="remarks" class="form-label">Remarks</label>
-                <textarea id="remarks" class="form-control" formControlName="notes"
-                style="height: 100px" placeholder="Remarks if any"></textarea>
+                <textarea id="remarks" class="form-control" formControlName="notes" style="height: 100px"
+                    placeholder="Remarks if any"></textarea>
             </div>
 
-            <div class="col-lg-6 mt-2">
-                <button class="btn btn-sm btn-primary mr-3" *ngIf="!disableCreateButton" (click)="createUser()">Save</button> 
-                <button class="btn btn-sm btn-primary mr-3" *ngIf="!disableUpdateButton" (click)="updateUserProfile()">Update</button>
-                <button class="btn btn-sm btn-info" (click)="resetProfile()">Reset</button>
+            <div class="col-lg-6 mt-3">
+                <button class="btn btn-sm btn-primary" id="saveBtn" *ngIf="!disableCreateButton"
+                    (click)="createUser()">Save</button>
+                <button class="btn btn-sm btn-primary" id="updateBtn" *ngIf="!disableUpdateButton"
+                    (click)="updateUserProfile()">Update</button>
+                <button class="btn btn-sm btn-info" id="resetBtn" (click)="resetProfile()">Reset</button>
             </div>
 
 

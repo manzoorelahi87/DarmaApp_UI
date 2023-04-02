@@ -3,9 +3,16 @@
   <hr/>
     <form [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
       <!-- errmsg show here -->
-      <div *ngIf="errmsgshow">
-        <p class="text-danger">{{ errmsg }}</p>
-      </div>
+      <div class="alert alert-success  alert-dismissible" *ngIf="successMsgShow" role="alert">
+        {{successMsg}}
+        <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger  alert-dismissible" *ngIf="errMsgShow" role="alert">
+        {{errMsg}}
+        <button type="button" class="btn-close" (click)="dismissMsg()" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+    </div>
   
       <div class="mb-3">
         <input

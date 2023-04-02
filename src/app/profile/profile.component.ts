@@ -18,29 +18,30 @@ export class ProfileComponent implements OnInit {
   getID: any;
   disableCreateButton;
   disableUpdateButton;
-  errmsg: any;
-  errmsgshow = false;
-  successmsg: any;
-  successmsgshow = false;
+  errMsg: any;
+  errMsgShow = false;
+  successMsg: any;
+  successMsgShow = false;
+  loader = false;
 
-  
+
 
   profileForm = new FormGroup({
     'firstName': new FormControl('', Validators.required),
     'lastName': new FormControl('', Validators.required),
-    'address': new FormControl('', Validators.required),
+    'address': new FormControl(''),
     'associationUnit': new FormControl('', Validators.required),
-    'mobileNo': new FormControl('', [Validators.required, Validators.max(10)]),
-    'landlineCode': new FormControl('', Validators.required),
-    'landlineNo': new FormControl('', Validators.required),
-    'email': new FormControl('', [Validators.required,Validators.email]),
-    'dateOfBirth': new FormControl('', Validators.required),
-    'spouseName': new FormControl('', Validators.required),
-    'spouseDOB': new FormControl('', Validators.required),
-    'maleChildren': new FormControl('', Validators.required),
-    'femaleChildren': new FormControl('', Validators.required),
-    'profilePhoto': new FormControl('', Validators.required),
-    'notes': new FormControl('', Validators.required),
+    'mobileNo': new FormControl('', [Validators.required, Validators.maxLength(10)]),
+    'landlineCode': new FormControl(''),
+    'landlineNo': new FormControl(''),
+    'email': new FormControl('', [Validators.required, Validators.email]),
+    'dateOfBirth': new FormControl(''),
+    'spouseName': new FormControl(''),
+    'spouseDOB': new FormControl(''),
+    'maleChildren': new FormControl(''),
+    'femaleChildren': new FormControl(''),
+    'profilePhoto': new FormControl(''),
+    'notes': new FormControl(''),
   });
 
   @ViewChild('dp1') dp1: NgbInputDatepicker;
@@ -59,14 +60,17 @@ export class ProfileComponent implements OnInit {
       this.disableCreateButton = true;
     }
     else {
+
       let email = localStorage.getItem('email');
       if (email !== 'admin@gmail.com') {
+        this.loader = true;
         let data = {
           'email': email
         }
         this.memberService.searchMyProfile(data).subscribe((res) => {
           console.log(res);
           this.getID = res.data[0].id;
+          this.loader = false;
           if (this.getID > 0) {
             this.userPatchValue(this.getID);
             this.disableUpdateButton = false;
@@ -78,8 +82,8 @@ export class ProfileComponent implements OnInit {
           }
         }, (err) => {
 
-          this.errmsgshow = true;
-          this.errmsg = err;
+          this.errMsgShow = true;
+          this.errMsg = err;
           this.disableUpdateButton = true;
           this.disableCreateButton = false;
         });
@@ -134,14 +138,22 @@ export class ProfileComponent implements OnInit {
 
   createUser() {
     console.log(this.profileForm.value);
-    this.memberService.createProfile(this.profileForm.value).subscribe((res) => {
-      this.successmsg = res.message;
-      this.successmsgshow = true;
-    }, (err)=>{
-      this.errmsg = err;
-      this.errmsgshow = true;
-    });
-    this.profileForm.reset();
+    if (this.profileForm.valid) {
+      this.loader = true;
+      this.memberService.createProfile(this.profileForm.value).subscribe((res) => {
+        this.loader = false;
+        this.successMsg = res.message;
+        this.successMsgShow = true;
+      }, (err) => {
+        this.errMsg = err;
+        this.errMsgShow = true;
+      });
+      this.profileForm.reset();
+    }
+    else {
+      this.errMsg = "Fill in all the mandatory fields!";
+      this.errMsgShow = true;
+    }
   }
 
   updateProfile() {
@@ -149,13 +161,28 @@ export class ProfileComponent implements OnInit {
   }
 
   updateUserProfile() {
-    this.memberService.updateProfile(this.profileForm.value, this.getID).subscribe((res) => {
-      this.successmsg = res.message;
-      this.successmsgshow = true;
-    }, (err)=>{
-      this.errmsg = err;
-      this.errmsgshow = true;
-    });
+    console.log( this.profileForm.valid)
+    console.log(this.profileForm.get('firstName').valid)
+    console.log(this.profileForm.get('lastName').valid)
+    console.log(this.profileForm.get('mobileNo').valid)
+    console.log(this.profileForm.get('email').valid)
+    console.log(this.profileForm.get('associationUnit').valid)
+   
+    if (this.profileForm.valid) {
+      this.loader = true;
+      this.memberService.updateProfile(this.profileForm.value, this.getID).subscribe((res) => {
+        this.loader = false;
+        this.successMsg = res.message;
+        this.successMsgShow = true;
+      }, (err) => {
+        this.errMsg = err;
+        this.errMsgShow = true;
+      });
+    }
+    else {
+      this.errMsg = "Fill in all the mandatory fields!";
+      this.errMsgShow = true;
+    }
   }
 
   resetProfile() {
@@ -163,8 +190,9 @@ export class ProfileComponent implements OnInit {
   }
 
   userPatchValue(id: any) {
-
+    this.loader = true;
     this.memberService.getMyProfile(id).subscribe((res) => {
+      this.loader = false;
       this.profileForm.patchValue({
         'firstName': res.data[0].firstname,
         'lastName': res.data[0].lastname,
@@ -179,10 +207,14 @@ export class ProfileComponent implements OnInit {
         'spouseDOB': res.data[0].sdob,
         'maleChildren': res.data[0].male,
         'femaleChildren': res.data[0].female,
-       
         'notes': res.data[0].notes
       });
     });
+  }
+
+  dismissMsg() {
+    this.errMsgShow = false;
+    this.successMsgShow = false;
   }
 
 }

@@ -21,6 +21,8 @@ import { LoginComponent } from './users/login/login.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgImageSliderModule } from 'ng-image-slider';
+import { EmailService } from './contact/email.service';
 
 @NgModule({
   declarations: [
@@ -42,9 +44,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgImageSliderModule
     
   ],
-  providers: [UserService, MemberService, AuthService, AuthGuard], 
+  providers: [UserService, MemberService, AuthService, AuthGuard, EmailService], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
