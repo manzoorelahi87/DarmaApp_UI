@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { MemberService } from '../member.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-profile',
@@ -16,28 +18,27 @@ export class ProfileComponent implements OnInit {
   minDate: any;
   maxDate: any;
   getID: any;
-  disableCreateButton;
-  disableUpdateButton;
+  disableCreateButton = true;
+  disableUpdateButton = true;
   errMsg: any;
   errMsgShow = false;
   successMsg: any;
   successMsgShow = false;
   loader = false;
-
-
+  profileData : any;
 
   profileForm = new FormGroup({
     'firstName': new FormControl('', Validators.required),
     'lastName': new FormControl('', Validators.required),
     'address': new FormControl(''),
     'associationUnit': new FormControl('', Validators.required),
-    'mobileNo': new FormControl('', [Validators.required, Validators.maxLength(10)]),
+    'mobileNo': new FormControl('', [Validators.required, Validators.minLength(10)]),
     'landlineCode': new FormControl(''),
     'landlineNo': new FormControl(''),
     'email': new FormControl('', [Validators.required, Validators.email]),
-    'dateOfBirth': new FormControl(''),
+    'dateOfBirth': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
     'spouseName': new FormControl(''),
-    'spouseDOB': new FormControl(''),
+    'spouseDOB': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
     'maleChildren': new FormControl(''),
     'femaleChildren': new FormControl(''),
     'profilePhoto': new FormControl(''),
@@ -46,13 +47,12 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('dp1') dp1: NgbInputDatepicker;
 
-  constructor(private router: ActivatedRoute, private memberService: MemberService) {
+  constructor(private router: ActivatedRoute, private memberService: MemberService, private datePipe: DatePipe) {
   }
 
   ngOnInit() {
     this.enableFields();
     this.maxDate = { year: new Date().getFullYear(), month: 12, day: 31 }
-
     this.getParamId = this.router.snapshot.paramMap.get('id');
     if (this.getParamId) {
       this.userPatchValue(this.getParamId);
@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit {
         }
         this.memberService.searchMyProfile(data).subscribe((res) => {
           console.log(res);
-          this.getID = res.data[0].id;
+          this.getID = (res.data[0]?.id) ? res.data[0]?.id : null;
           this.loader = false;
           if (this.getID > 0) {
             this.userPatchValue(this.getID);
@@ -81,7 +81,6 @@ export class ProfileComponent implements OnInit {
             this.disableCreateButton = false;
           }
         }, (err) => {
-
           this.errMsgShow = true;
           this.errMsg = err;
           this.disableUpdateButton = true;
@@ -140,7 +139,8 @@ export class ProfileComponent implements OnInit {
     console.log(this.profileForm.value);
     if (this.profileForm.valid) {
       this.loader = true;
-      this.memberService.createProfile(this.profileForm.value).subscribe((res) => {
+      this.createProfileData();
+      this.memberService.createProfile(this.profileData).subscribe((res) => {
         this.loader = false;
         this.successMsg = res.message;
         this.successMsgShow = true;
@@ -161,16 +161,31 @@ export class ProfileComponent implements OnInit {
   }
 
   updateUserProfile() {
-    console.log( this.profileForm.valid)
-    console.log(this.profileForm.get('firstName').valid)
-    console.log(this.profileForm.get('lastName').valid)
-    console.log(this.profileForm.get('mobileNo').valid)
-    console.log(this.profileForm.get('email').valid)
-    console.log(this.profileForm.get('associationUnit').valid)
-   
+    // console.log(this.profileForm.get('firstName').valid)
+    // console.log(this.profileForm.get('lastName').valid)
+    // console.log(this.profileForm.get('associationUnit').valid)
+    // console.log(this.profileForm.get('mobileNo').valid)
+    // console.log(this.profileForm.get('mobileNo').value.length)
+    // console.log(this.profileForm.get('email').valid)
+    // console.log(this.profileForm.value)
+    // console.log(this.profileForm.valid)
+
+    // const controls = this.profileForm.controls;
+    // for (const name in controls) {
+    //   if (controls[name].invalid) {
+    //     console.log(name)
+    //   }
+    // }
+    // const date = this.profileForm.get('dateOfBirth').value.year + '/' + this.profileForm.get('dateOfBirth').value.month + '/'+ this.profileForm.get('dateOfBirth').value.day
+    // console.log(date)
+
+    this.createProfileData();
+
+    
     if (this.profileForm.valid) {
       this.loader = true;
-      this.memberService.updateProfile(this.profileForm.value, this.getID).subscribe((res) => {
+      this.getParamId = this.router.snapshot.paramMap.get('id');
+      this.memberService.updateProfile(this.profileData, this.getParamId).subscribe((res) => {
         this.loader = false;
         this.successMsg = res.message;
         this.successMsgShow = true;
@@ -185,14 +200,48 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  createProfileData(){
+    this.profileData ={      
+      "firstName": this.profileForm.get('firstName').value,
+      "lastName": this.profileForm.get('lastName').value,
+      "address": this.profileForm.get('address').value,
+      "associationUnit": this.profileForm.get('associationUnit').value,
+      "mobileNo": this.profileForm.get('mobileNo').value,
+      "landlineCode": this.profileForm.get('landlineCode').value,
+      "landlineNo": this.profileForm.get('landlineNo').value,
+      "email": this.profileForm.get('email').value,
+      "dateOfBirth": this.profileForm.get('dateOfBirth').value.year + '-' + this.profileForm.get('dateOfBirth').value.month + '-'+ this.profileForm.get('dateOfBirth').value.day,
+      "spouseName": this.profileForm.get('spouseName').value,
+      "spouseDOB": this.profileForm.get('spouseDOB').value.year + '-' + this.profileForm.get('spouseDOB').value.month + '-'+ this.profileForm.get('spouseDOB').value.day,
+      "maleChildren": this.profileForm.get('maleChildren').value,
+      "femaleChildren": this.profileForm.get('femaleChildren').value,
+      "profilePhoto": this.profileForm.get('profilePhoto').value,
+      "notes": this.profileForm.get('notes').value    
+  }
+  }
+
   resetProfile() {
     this.profileForm.reset();
+    console.log(this.profileForm.get('dateOfBirth').value);
+  }
+
+  formatDate(date: Date) {    
+    console.log("Inside format fucntion");    
+    return {
+      'year': parseInt(moment(date.toLocaleString()).format('YYYY')),
+      'month': parseInt(moment(date.toLocaleString()).format('MM')),
+      'day': parseInt(moment(date.toLocaleString()).format('DD')) 
+    }
   }
 
   userPatchValue(id: any) {
     this.loader = true;
     this.memberService.getMyProfile(id).subscribe((res) => {
       this.loader = false;
+      console.log(res.data[0].sdob);
+      console.log(res.data[0].dob);
+      const dateFormatted = this.formatDate(res.data[0].dob);
+      console.log(dateFormatted);
       this.profileForm.patchValue({
         'firstName': res.data[0].firstname,
         'lastName': res.data[0].lastname,
@@ -202,9 +251,9 @@ export class ProfileComponent implements OnInit {
         'landlineCode': res.data[0].landcode,
         'landlineNo': res.data[0].landline,
         'email': res.data[0].email,
-        'dateOfBirth': res.data[0].dob,
+        'dateOfBirth': this.formatDate(res.data[0].dob),
         'spouseName': res.data[0].spouse,
-        'spouseDOB': res.data[0].sdob,
+        'spouseDOB': this.formatDate(res.data[0].sdob),
         'maleChildren': res.data[0].male,
         'femaleChildren': res.data[0].female,
         'notes': res.data[0].notes

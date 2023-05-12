@@ -10,30 +10,25 @@ export class MembersComponent implements OnInit {
 
   isUserAdmin = true;
   users: any;
-
   errmsg: any;
   errmsgshow = false;
-
   page: number = 1;
   count: number = 0;
   tableSize: number = 2;
   tableSizes: any = [3, 6, 9, 12];
-
-  constructor(private memberService: MemberService) {
-
-  }
+  constructor(private memberService: MemberService) { }
   ngOnInit() {
-   this.getAllUsers();
+    this.getAllUsers();
   }
 
   deleteUser(id: any) {
-    this.memberService.deleteProfile(id).subscribe((res)=>{
+    this.memberService.deleteProfile(id).subscribe((res) => {
       console.log(res.message);
     });
     this.getAllUsers();
   }
 
-  getAllUsers(){
+  getAllUsers() {
     this.memberService.getMemberDetails().subscribe((res) => {
       this.users = res.data;
       console.log(res.message);

@@ -18,6 +18,7 @@ export class MemberService {
 
   updateProfile(data:any, id:any):Observable<any>{
     let ids= id;
+    console.log(data);
     return this.http.put(`${this.apiUrl}/profile/${ids}`, data);
   }
 

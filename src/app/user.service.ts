@@ -12,12 +12,10 @@ export class UserService {
   apiUrl = "http://localhost:3000/user";
 
   getAllUsers():Observable<any>{
-    // return this.http.get(`${this.apiUrl}` + '/user');
     return this.http.get(`${this.apiUrl}`);
   }
 
   createUser(data:any):Observable<any>{
-    // return this.http.post(`${this.apiUrl}` + '/user', data);
     return this.http.post(`${this.apiUrl}`, data);
   }
 

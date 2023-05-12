@@ -1,7 +1,5 @@
 <div class="container">
     <div class="button-wrapper">
-        <!-- <button class="btn btn-primary" [disabled]="disableCreateButton" (click)="createProfile()">Create Profile</button> &nbsp;
-        <button class="btn btn-primary" [disabled]="disableUpdateButton" (click)="updateProfile()">Update Profile</button> &nbsp; -->
         <h3 *ngIf="!disableCreateButton"> Create Profile</h3>
         <h3 *ngIf="!disableUpdateButton"> Update Profile</h3>
     </div>
@@ -12,8 +10,6 @@
         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
         Data Calling...
     </button>
-
-
 
     <div class="form-wrapper">
         <form [formGroup]="profileForm">
@@ -47,7 +43,7 @@
             </div>
 
             <div class="col-lg-6 mt-2">
-                <label for="associationUnit" class="form-label">Association</label>
+                <label for="associationUnit" class="form-label">Association*</label>
                 <select id="associationUnit" class="form-select" aria-label="Default select example"
                     formControlName="associationUnit">
                     <option value="">Select Unit</option>
@@ -56,6 +52,7 @@
                     <option value="Calicut">Calicut</option>
                     <option value="Thrissur">Thrissur</option>
                 </select>
+               
             </div>
 
             <div class="col-lg-6 mt-2">
@@ -73,7 +70,6 @@
                             placeholder="STD code">
                     </div>
                     <div class="col-lg-6">
-                        <!-- <label for="landlineNumber" class="form-label">Landline no:</label> -->
                         <input id="landlineNumber" type="text" class="form-control" formControlName="landlineNo"
                             placeholder="Landline number">
                     </div>
@@ -83,7 +79,7 @@
             <div class="col-lg-6 mt-2">
                 <label for="email" class="form-label">Email*</label>
                 <input id="email" type="email" class="form-control" formControlName="email" placeholder="abc@gmail.com">
-            </div>
+                </div>
 
             <div class="col-lg-6 mt-2">
                 <label for="dateofBirth" class="form-label">Date of Birth</label>
@@ -107,8 +103,8 @@
                 <div id="spouseDOB" class="input-group">
                     <input type="text" class="form-control" placeholder="YYYY-MM-DD" formControlName="spouseDOB"
                         [maxDate]="maxDate" [minDate]="{year: 1900, month: 1, day: 1}" ngbDatepicker
-                        #d="ngbDatepicker" />
-                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><i
+                        #e="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="e.toggle()" type="button"><i
                             class="fa fa-calendar" style="color:rgb(13, 13, 14);"></i></button>
                 </div>
 
@@ -147,8 +143,6 @@
                     (click)="updateUserProfile()">Update</button>
                 <button class="btn btn-sm btn-info" id="resetBtn" (click)="resetProfile()">Reset</button>
             </div>
-
-
         </form>
     </div>
 

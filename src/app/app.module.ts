@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreateComponent } from './create/create.component';
+
 import { ReadComponent } from './read/read.component';
 
 import {HttpClientModule} from '@angular/common/http';
@@ -23,18 +23,23 @@ import { AuthGuard } from './auth.guard';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { EmailService } from './contact/email.service';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { provideUserIdleConfig } from 'angular-user-idle';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CreateComponent,
+    AppComponent,  
     ReadComponent,
     HomeComponent,
     ProfileComponent,
     ContactComponent,
     MembersComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    FileUploadComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,9 @@ import { EmailService } from './contact/email.service';
     NgImageSliderModule
     
   ],
-  providers: [UserService, MemberService, AuthService, AuthGuard, EmailService], 
+  providers: [UserService, MemberService, AuthService, AuthGuard, EmailService, DatePipe,
+    provideUserIdleConfig({ idle: 600, timeout: 300, ping: 100 })
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

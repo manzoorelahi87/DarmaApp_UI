@@ -11,13 +11,13 @@ import { LoginService } from './login.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private service:LoginService) {}
+  constructor(private service: LoginService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     let getToken = this.service.getToken();
     let setheadertoken = request.clone({
-      setHeaders:{
-        token:`${getToken}`
+      setHeaders: {
+        token: `${getToken}`
       }
     });
     return next.handle(setheadertoken);

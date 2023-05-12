@@ -10,7 +10,7 @@ import { LoginService } from '../login.service';
 })
 export class SignupComponent {
 
-  constructor( private router: Router, private service:LoginService) {}
+  constructor(private router: Router, private service: LoginService) { }
   errMsg: any;
   errMsgShow = false;
   successMsg: any;
@@ -22,14 +22,14 @@ export class SignupComponent {
     password: new FormControl('', Validators.required),
   });
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   signupSubmit() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value, 'signuform###');
       this.errMsgShow = false;
 
-      // callapi signup
+      // call api signup
       this.service.signup(this.signupForm.value).subscribe((res) => {
         console.log(res, 'res##');
         if (res.status == true) {

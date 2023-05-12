@@ -7,37 +7,28 @@ import { Observable } from 'rxjs';
 })
 export class LoginService {
 
-  
-  constructor(private http:HttpClient) { }
+
+  constructor(private http: HttpClient) { }
 
   apiUrl = 'http://localhost:3000';
 
 
   // signup 
-  signup(data:any):Observable<any>
-  {
-    console.log(data,'data##');    
-    return this.http.post(`${this.apiUrl}/signup`,data);
+  signup(data: any): Observable<any> {
+    console.log(data, 'data##');
+    return this.http.post(`${this.apiUrl}/signup`, data);
   }
 
   // login 
-  login(data:any):Observable<any>
-  {
-    console.log(data,'data###');
-    return this.http.post(`${this.apiUrl}/login`,data);    
+  login(data: any): Observable<any> {
+    console.log(data, 'data###');
+    return this.http.post(`${this.apiUrl}/login`, data);
   }
 
-  // // tutorial
-  // tutorial():Observable<any>
-  // {
-  //       return this.http.get(`${this.apiUrl}/tutorial`);
-  // }
-
   // gettoken
-  getToken()
-  {
+  getToken() {
     return localStorage.getItem('token');
-  } 
+  }
 
 
 }

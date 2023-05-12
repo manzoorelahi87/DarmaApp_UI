@@ -1,44 +1,36 @@
 <div class="container mt-5">
-<div *ngIf="isUserAdmin">
-  <h3 class="mb-3">Member Details</h3>
-  <hr/>
+  <div *ngIf="isUserAdmin">
+    <h3 class="mb-3">Member Details</h3>
+    <hr />
     <table class="table">
-        <thead>
-          <tr>
-            <!-- <th scope="col">#</th> -->
-            <th scope="col">Name</th>
-            
-            <th scope="col">Unit</th>
-            <th scope="col">Mobile No</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor = "let user of users | paginate : {
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Mobile No</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | paginate : {
               itemsPerPage: tableSize,
               currentPage: page,
               totalItems: count
             };  let i = index">
-            <!-- <th scope="row">{{user.id}}</th> -->
-            <td>{{user.firstname}} {{user.lastname}}</td>
-           
-            <td>{{user.unit}}</td>
-            <td>{{user.mobile}}</td>
-            <td>{{user.email}}</td>
-            <td><button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Delete</button>&nbsp;
+          <td>{{user.firstname}} {{user.lastname}}</td>
+          <td>{{user.unit}}</td>
+          <td>{{user.mobile}}</td>
+          <td>{{user.email}}</td>
+          <td><button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Delete</button>&nbsp;
             <a [routerLink]="['/profile',user.id]" class="btn btn-sm btn-secondary">Update</a>
-            </td>
-          </tr>          
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center">
-        <pagination-controls
-          previousLabel="Prev"
-          nextLabel="Next"
-          (pageChange)="onTableDataChange($event)"
-        >
-        </pagination-controls>
-      </div>
-</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+      </pagination-controls>
+    </div>
+  </div>
 </div>
