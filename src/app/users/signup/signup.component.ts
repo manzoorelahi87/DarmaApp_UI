@@ -18,7 +18,8 @@ export class SignupComponent {
 
   signupForm = new FormGroup({
     name: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    phone: new FormControl('', Validators.required),
+    email: new FormControl(''),
     password: new FormControl('', Validators.required),
   });
 

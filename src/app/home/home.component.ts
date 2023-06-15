@@ -6,30 +6,51 @@ import { GoogleService } from '../google.service';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent  {
-
-
+export class HomeComponent {
     constructor(private csv: GoogleService) { }
     homePhotoUrls = [];
-
     boardMembers = [];
+    committeMembers = [];
+    imageObject1 = [];
+    notificationMessage: any;
+    homeContent: any;
 
     ngOnInit() {
 
         this.csv.getBoardMemberDetails().subscribe((res) => {
-            console.log(res);
             this.boardMembers = res;
-          });
+        });
 
-        this.csv.getEventPhotos().subscribe((res)=>{
+        this.csv.getCommitteMembers().subscribe((res) => {
+            this.committeMembers = res;
+            this.createImageObject();
+        });
 
+        this.csv.getEventPhotos().subscribe((res) => {
             this.homePhotoUrls = res;
-            // res.forEach(item => {
-            //   this.homePhotoUrls.push(item.Photolinks);
-            // });          
-          });
+        });
+
+        this.csv.getHomeContent().subscribe((res) => {
+            if (res[0].section === 'header'){
+                this.homeContent = res[0].content;
+            }
+            if (res[1].section === 'notification'){
+                this.notificationMessage = res[1].content;                
+            }
+        });
     }
 
+
+    createImageObject() {
+        for (let member of this.committeMembers) {
+            const data = {
+                image: member.imageUrl,
+                thumbImage: member.imageUrl,
+                title: member.name
+            }
+            this.imageObject1.push(data);
+        }
+    }
     imageObject = [{
         image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
         thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',

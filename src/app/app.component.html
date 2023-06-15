@@ -6,12 +6,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">       
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" *ngIf="userName" routerLink="profile">Profile</a>
         </li>
-        <li class="nav-item" *ngIf="userName==='Admin'">
-          <a class="nav-link active" routerLink="members">Members</a>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="userName" routerLink="members">Members</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" *ngIf="userName" routerLink="contact">Contact</a>
@@ -29,10 +29,11 @@
   </div>
 </nav>
 <div class="container container-top">
-
+ 
   <router-outlet></router-outlet>
 
-  <footer>
-    <span> &#169; {{date|date:'yyyy'}} Alban Tech Solutions, All rights reserved</span>
-  </footer>
+ 
 </div>
+<footer>
+  <span> &#169; {{date|date:'yyyy'}} Alban Tech Solutions, All rights reserved</span>
+</footer>

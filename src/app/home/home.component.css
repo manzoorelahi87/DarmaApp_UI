@@ -20,3 +20,11 @@ p{
 p.indent {
     text-indent: 30px;
 }
+
+img{
+    max-height: 80%;
+}
+
+.container{
+    margin-top:30px;
+}

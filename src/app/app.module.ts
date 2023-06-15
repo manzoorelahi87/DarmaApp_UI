@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { ReadComponent } from './read/read.component';
 
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { UserService } from './user.service';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -26,6 +26,8 @@ import { EmailService } from './contact/email.service';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { provideUserIdleConfig } from 'angular-user-idle';
 import { DatePipe } from '@angular/common';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { CacheInterceptor } from './users/cache.interceptor';
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { DatePipe } from '@angular/common';
     SignupComponent,
     LoginComponent,
     FileUploadComponent,
+    ResetPasswordComponent,
     
   ],
   imports: [
@@ -53,6 +56,7 @@ import { DatePipe } from '@angular/common';
     
   ],
   providers: [UserService, MemberService, AuthService, AuthGuard, EmailService, DatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
     provideUserIdleConfig({ idle: 600, timeout: 300, ping: 100 })
   ], 
   bootstrap: [AppComponent]

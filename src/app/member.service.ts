@@ -40,4 +40,16 @@ export class MemberService {
     return this.http.post(`${this.apiUrl}/members/search`, data);
   }
 
+  searchMembers(data:any):Observable<any>{
+    return this.http.post(`${this.apiUrl}/members/searchAll`, data)
+  }
+
+  searchUsers(data:any):Observable<any>{
+    return this.http.post(`${this.apiUrl}/users/searchAll`, data)
+  }
+
+  updateUser(data:any):Observable<any>{    
+    return this.http.put(`${this.apiUrl}/users/updateUser`, data);
+  }
+
 }

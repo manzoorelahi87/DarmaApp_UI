@@ -9,9 +9,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { ReadComponent } from './read/read.component';
 import { LoginComponent } from './users/login/login.component';
 import { SignupComponent } from './users/signup/signup.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
 
 const routes: Routes = [
-  { path: '*', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'read', component: ReadComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
@@ -20,7 +21,10 @@ const routes: Routes = [
   { path: 'members', component: MembersComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'file-upload', component: FileUploadComponent }
+  { path: 'file-upload', component: FileUploadComponent },
+  { path: '*', component: HomeComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
 ];
 
 @NgModule({

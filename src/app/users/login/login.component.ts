@@ -13,6 +13,10 @@ export class LoginComponent {
   constructor(private router:Router, private service: LoginService) { }
   errmsg:any;
   errmsgshow=false;
+  resetPassword: any;
+
+  successMsg: any;
+  successMsgShow = false;
   
  loginForm = new FormGroup({
    email:new FormControl('',Validators.required),
@@ -54,6 +58,12 @@ export class LoginComponent {
       this.errmsg = 'All field required !!';
     }
   }
+
+  dismissMsg() {
+    this.errmsgshow = false;
+    this.successMsgShow = false;
+  }
+
 
 
 }

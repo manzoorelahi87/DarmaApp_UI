@@ -30,5 +30,15 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
+  //reset password by admin
+  resetPasswordAdmin(data): Observable<any>{
+    return this.http.put(`${this.apiUrl}/reset`, data);
+  }
+
+  //reset Password by users
+  resetPassword(data):Observable<any>{
+    return this.http.put(`${this.apiUrl}/reset-password`, data);
+  }
+
 
 }

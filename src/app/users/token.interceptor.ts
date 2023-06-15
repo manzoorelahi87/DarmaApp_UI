@@ -3,7 +3,8 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
@@ -11,6 +12,8 @@ import { LoginService } from './login.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
+  private cache: Map<HttpRequest, HttpResponse> = new Map();
+  
   constructor(private service: LoginService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
