@@ -268,9 +268,13 @@ export class ProfileComponent implements OnInit {
       console.log(this.profileForm.value);
       this.loader = true;
       this.getParamId = this.router.snapshot.paramMap.get('id');
+      console.log("First" + this.getParamId)
+      console.log("getID" + this.getID)
       if(!this.getParamId){
+        console.log("Ïnside If")
         this.getParamId= this.getID
       }
+      console.log("Last" + this.getParamId)
       this.memberService.updateProfile(this.profileData, this.getParamId).subscribe((res) => {
         this.loader = false;
         this.successMsg = res.message;
