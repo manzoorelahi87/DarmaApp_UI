@@ -16,10 +16,10 @@
         aria-label="Close"></button>
     </div>
 
-    <!-- errmsg show here -->
-    <!-- <div *ngIf="errmsgshow">
-      <p class="text-danger">{{ errmsg }}</p>
-    </div> -->
+    <button *ngIf="loader" class="btn btn-primary" type="button" disabled>
+      <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+      Data Calling...
+  </button>
     <div>
       <div class="mb-3">
         <input type="text" class="form-control" formControlName="email"

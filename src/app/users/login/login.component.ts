@@ -17,6 +17,7 @@ export class LoginComponent {
 
   successMsg: any;
   successMsgShow = false;
+  loader = false;
   
  loginForm = new FormGroup({
    email:new FormControl('',Validators.required),
@@ -32,7 +33,9 @@ export class LoginComponent {
     if(this.loginForm.valid)
     {
       console.log(this.loginForm.value,'loginvalue##');
+      this.loader = true;
       this.service.login(this.loginForm.value).subscribe((res)=>{
+        this.loader = false;
         if(res.status==true)
         {
           console.log(res,'resss');
