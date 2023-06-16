@@ -212,7 +212,7 @@ export class ProfileComponent implements OnInit {
       console.log(res.data);
       if (res.data.email !== this.eMail) {
         // this.memberService.updateUser(data).subscribe((response) => {  this.profileForm.value
-        this.memberService.updateUser(this.profileForm.value).subscribe((response) => {
+        this.memberService.updateUser(data).subscribe((response) => {
           if (this.userName !== 'Admin') {
             localStorage.setItem('email', this.eMail);
           }
@@ -268,6 +268,9 @@ export class ProfileComponent implements OnInit {
       console.log(this.profileForm.value);
       this.loader = true;
       this.getParamId = this.router.snapshot.paramMap.get('id');
+      if(!this.getParamId){
+        this.getParamId= this.getID
+      }
       this.memberService.updateProfile(this.profileData, this.getParamId).subscribe((res) => {
         this.loader = false;
         this.successMsg = res.message;
