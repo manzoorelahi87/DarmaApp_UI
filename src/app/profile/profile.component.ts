@@ -210,8 +210,7 @@ export class ProfileComponent implements OnInit {
     }
     this.memberService.searchUsers(data).subscribe((res) => {
       console.log(res.data);
-      if (res.data.email !== this.eMail) {
-        // this.memberService.updateUser(data).subscribe((response) => {  this.profileForm.value
+      if (res.data[0].email !== this.eMail) {       
         this.memberService.updateUser(data).subscribe((response) => {
           if (this.userName !== 'Admin') {
             localStorage.setItem('email', this.eMail);
