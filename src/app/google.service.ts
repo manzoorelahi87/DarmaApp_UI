@@ -42,6 +42,17 @@ export class GoogleService {
         })
       );
   }
+  
+
+  public getSubEventPhotos(): Observable<any> {
+    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Sub_Events_Photos'
+    return this.http.get(url)
+      .pipe(
+        map((res: any) => {          
+          return res;
+        })
+      );
+  }
 
   public getProfilePhotos(): Observable<any> {
     const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Member_Photos'

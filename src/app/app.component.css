@@ -33,7 +33,7 @@ nav{
     font-weight: 500;
 }
 
-.nav-item:hover{
+.nav-item .nav-link:hover{
     background-color: aqua;
     border-radius: 5px;   
     vertical-align: center;
