@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit {
     'lastName': new FormControl('', Validators.required),
     'address': new FormControl(''),
     'associationUnit': new FormControl('', Validators.required),
+    'department' : new FormControl(''),
     'mobileNo': new FormControl('', [Validators.required]),
     'smobileNo': new FormControl(''),
     'landlineCode': new FormControl(''),
@@ -135,7 +136,8 @@ export class ProfileComponent implements OnInit {
     this.profileForm.get('firstName')?.disable();
     this.profileForm.get('lastName')?.disable();
     this.profileForm.get('address')?.disable();
-    this.profileForm.get('associationUnit')?.disable();
+    this.profileForm.get('associationUnit')?.disable();    
+    this.profileForm.get('department')?.disable();
     this.profileForm.get('mobileNo')?.disable();
     this.profileForm.get('smobileNo')?.disable();
     this.profileForm.get('landlineCode')?.disable();
@@ -156,6 +158,7 @@ export class ProfileComponent implements OnInit {
     this.profileForm.get('lastName')?.enable();
     this.profileForm.get('address')?.enable();
     this.profileForm.get('associationUnit')?.enable();
+    this.profileForm.get('department')?.enable();
     this.profileForm.get('mobileNo')?.enable();
     this.profileForm.get('smobileNo')?.enable();
     this.profileForm.get('landlineCode')?.enable();
@@ -266,14 +269,10 @@ export class ProfileComponent implements OnInit {
       this.createProfileData();
       console.log(this.profileForm.value);
       this.loader = true;
-      this.getParamId = this.router.snapshot.paramMap.get('id');
-      console.log("First" + this.getParamId)
-      console.log("getID" + this.getID)
-      if(!this.getParamId){
-        console.log("Ïnside If")
+      this.getParamId = this.router.snapshot.paramMap.get('id');     
+      if(!this.getParamId){     
         this.getParamId= this.getID
-      }
-      console.log("Last" + this.getParamId)
+      }     
       this.memberService.updateProfile(this.profileData, this.getParamId).subscribe((res) => {
         this.loader = false;
         this.successMsg = res.message;
@@ -305,6 +304,7 @@ export class ProfileComponent implements OnInit {
       "lastName": this.profileForm.get('lastName').value,
       "address": this.profileForm.get('address').value,
       "associationUnit": this.profileForm.get('associationUnit').value,
+      "department": this.profileForm.get('department').value,
       "mobileNo": this.profileForm.get('mobileNo').value,
       "smobileNo": this.profileForm.get('smobileNo').value,
       "landlineCode": this.profileForm.get('landlineCode').value,
@@ -364,6 +364,7 @@ export class ProfileComponent implements OnInit {
         'lastName': res.data[0].lastname,
         'address': res.data[0].address,
         'associationUnit': res.data[0].unit,
+        'department': res.data[0].department,
         'mobileNo': res.data[0].mobile,
         'smobileNo': res.data[0].smobile,
         'landlineCode': res.data[0].landcode,

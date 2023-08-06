@@ -32,3 +32,9 @@ nav{
     font-size: medium;
     font-weight: 500;
 }
+
+.nav-item:hover{
+    background-color: aqua;
+    border-radius: 5px;   
+    vertical-align: center;
+}
