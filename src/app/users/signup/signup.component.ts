@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
+import { MemberService } from 'src/app/member.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +11,7 @@ import { LoginService } from '../login.service';
 })
 export class SignupComponent {
 
-  constructor(private router: Router, private service: LoginService) { }
+  constructor(private router: Router, private service: LoginService, private memberService: MemberService) { }
   errMsg: any;
   errMsgShow = false;
   successMsg: any;
@@ -34,6 +35,16 @@ export class SignupComponent {
       this.service.signup(this.signupForm.value).subscribe((res) => {
         console.log(res, 'res##');
         if (res.status == true) {
+          const request ={
+            'firstname': this.signupForm.get('name').value,
+            'mobile': this.signupForm.get('phone').value,
+            'email':  this.signupForm.get('email').value
+          }
+          this.memberService.createBasicProfile(request).subscribe((response) =>{
+            console.log(response);
+            console.log("API call for basic create");
+          });
+
           this.router.navigate(['login']);
         } else {
           this.errMsgShow = true;

@@ -1,12 +1,14 @@
 .carousel .item {
-  height: 200px;
+  /* height: 200px; */
+  height:auto;
 }
 
 .item img {
     position: absolute;
     top: 0;
     left: 0;
-    min-height: 300px;
+    /* min-height: 300px; */
+    height:auto;
 }
 
 img.board {  
@@ -22,9 +24,15 @@ p.indent {
 }
 
 img{
-    max-height: 80%;
+    /* max-height: 80%; */
+    height:auto;
 }
 
 .container{
     margin-top:30px;
 }
+.carousel {
+    width: 100%;
+    height:auto;
+    object-fit:contain;
+  }

@@ -16,6 +16,11 @@ export class MemberService {
     return this.http.post(`${this.apiUrl}/profile`, data);
   }
 
+  createBasicProfile(data:any):Observable<any>{
+    console.log("Ïnside basic profile API call");
+    return this.http.post(`${this.apiUrl}/basicProfile`, data);
+  }
+
   updateProfile(data:any, id:any):Observable<any>{
     let ids= id;
     console.log(data);
