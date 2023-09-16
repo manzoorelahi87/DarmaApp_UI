@@ -19,7 +19,7 @@ export class MembersComponent implements OnInit {
   tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
   userName = localStorage.getItem('username');
-  enableSearchText: boolean;
+  enableSearchText: boolean = false;
 
   errMsg: any;
   errMsgShow = false;
@@ -57,11 +57,11 @@ export class MembersComponent implements OnInit {
   onTableDataChange(event: any) {
     this.page = event;
     // this.getAllUsers();
-    if (this.enableSearchText) {
-      this.searchUsers()
-    } else {
-      this.getAllUsers()
-    }
+    // if (this.enableSearchText) {
+    //   this.searchUsers()
+    // } else {
+    //   this.getAllUsers()
+    // }
   }
   onTableSizeChange(event: any): void {
     this.tableSize = event.target.value;
