@@ -50,6 +50,7 @@ export class MembersComponent implements OnInit {
   getAllUsers() {
     this.memberService.getMemberDetails().subscribe((res) => {
       this.users = res.data;
+      this.page = 1;
       console.log(res.message);
     });
   }
