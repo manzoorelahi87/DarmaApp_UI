@@ -49,8 +49,7 @@ export class MembersComponent implements OnInit {
 
   getAllUsers() {
     this.memberService.getMemberDetails().subscribe((res) => {
-      this.users = res.data;
-      this.page = 1;
+      this.users = res.data;    
       console.log(res.message);
     });
   }
@@ -78,6 +77,7 @@ export class MembersComponent implements OnInit {
     console.log(this.searchForm.value);
     this.memberService.searchMembers(this.searchForm.value).subscribe((res) => {
       this.users = res.data;
+      this.page = 1;
       console.log(res.message);
     })
   }
