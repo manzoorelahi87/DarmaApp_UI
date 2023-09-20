@@ -38,6 +38,8 @@ export class ProfileComponent implements OnInit {
   username: string;
   phone: string;
   eMail: string;
+  dob;
+  sdob;
 
   profileForm = new FormGroup({
     'firstName': new FormControl('', Validators.required),
@@ -50,9 +52,11 @@ export class ProfileComponent implements OnInit {
     'landlineCode': new FormControl(''),
     'landlineNo': new FormControl(''),
     'email': new FormControl('', [Validators.email]),
-    'dateOfBirth': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
+    // 'dateOfBirth': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
+    'dateOfBirth': new FormControl(null),
     'spouseName': new FormControl(''),
-    'spouseDOB': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
+    // 'spouseDOB': new FormControl({ 'year': 2018, 'month': 12, 'day': 12 }),
+    'spouseDOB': new FormControl(null),
     'maleChildren': new FormControl(''),
     'femaleChildren': new FormControl(''),
     'notes': new FormControl(''),
@@ -298,6 +302,18 @@ export class ProfileComponent implements OnInit {
 
     this.phone = this.profileForm.get('mobileNo').value;
     this.eMail = this.profileForm.get('email').value;
+    if(this.profileForm.get('dateOfBirth').value?.year === undefined){
+      this.dob = null;
+    }
+    else{
+      this.dob = this.profileForm.get('dateOfBirth').value?.year + '-' + this.profileForm.get('dateOfBirth').value?.month + '-' + this.profileForm.get('dateOfBirth').value?.day;
+    }
+    if(this.profileForm.get('spouseDOB').value?.year === undefined){
+      this.sdob = null;
+    }
+    else{
+      this.sdob = this.profileForm.get('spouseDOB').value?.year + '-' + this.profileForm.get('spouseDOB').value?.month + '-' + this.profileForm.get('spouseDOB').value?.day
+    }
 
     this.profileData = {
       "firstName": this.profileForm.get('firstName').value,
@@ -310,9 +326,9 @@ export class ProfileComponent implements OnInit {
       "landlineCode": this.profileForm.get('landlineCode').value,
       "landlineNo": this.profileForm.get('landlineNo').value,
       "email": this.profileForm.get('email').value,
-      "dateOfBirth": this.profileForm.get('dateOfBirth').value.year + '-' + this.profileForm.get('dateOfBirth').value.month + '-' + this.profileForm.get('dateOfBirth').value.day,
+      "dateOfBirth": this.dob,
       "spouseName": this.profileForm.get('spouseName').value,
-      "spouseDOB": this.profileForm.get('spouseDOB').value.year + '-' + this.profileForm.get('spouseDOB').value.month + '-' + this.profileForm.get('spouseDOB').value.day,
+      "spouseDOB": this.sdob,
       "maleChildren": this.profileForm.get('maleChildren').value,
       "femaleChildren": this.profileForm.get('femaleChildren').value,
       "notes": this.profileForm.get('notes').value
@@ -337,14 +353,11 @@ export class ProfileComponent implements OnInit {
   userPatchValue(id: any) {   
     this.loader = true;
     this.username = '';
-    // this.phone = '';
-    // this.eMail = '';
+  
     this.memberService.getMyProfile(id).subscribe((res) => {
       this.loader = false;
       // this is to display photo
-      this.username = res.data[0].firstname + ' ' + res.data[0].lastname;
-      // this.phone = res.data[0].mobile
-      // this.eMail = res.data[0].email;
+      this.username = res.data[0].firstname + ' ' + res.data[0].lastname;    
 
       if (res.data[0].email === localStorage.getItem('email')) {
         this.enableFields();
@@ -357,6 +370,7 @@ export class ProfileComponent implements OnInit {
       if (res.data[0].mobile > '') {
         this.profileForm.get('mobileNo')?.disable();
       }
+      
       this.profileForm.patchValue({
         'firstName': res.data[0].firstname,
         'lastName': res.data[0].lastname,
@@ -367,10 +381,10 @@ export class ProfileComponent implements OnInit {
         'smobileNo': res.data[0].smobile,
         'landlineCode': res.data[0].landcode,
         'landlineNo': res.data[0].landline,
-        'email': res.data[0].email,
-        'dateOfBirth': this.formatDate(res.data[0].dob),
+        'email': res.data[0].email,      
+        'dateOfBirth': res.data[0].dob.includes(1899) ? null : this.formatDate(res.data[0].dob),
         'spouseName': res.data[0].spouse,
-        'spouseDOB': this.formatDate(res.data[0].sdob),
+        'spouseDOB': res.data[0].sdob.includes(1899) ? null : this.formatDate(res.data[0].sdob),
         'maleChildren': res.data[0].male,
         'femaleChildren': res.data[0].female,
         'notes': res.data[0].notes
