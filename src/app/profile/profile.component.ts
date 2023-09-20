@@ -84,10 +84,8 @@ export class ProfileComponent implements OnInit {
     }
     //Set max date for calendar picker, used for date of birth
     this.maxDate = { year: new Date().getFullYear(), month: 12, day: 31 }
-    this.getParamId = this.router.snapshot.paramMap.get('id');
-    console.log("Param" + this.getParamId)
-    if (this.getParamId) {
-      console.log("Inside getParam")
+    this.getParamId = this.router.snapshot.paramMap.get('id');   
+    if (this.getParamId) {    
       this.userPatchValue(this.getParamId);
       this.disableUpdateButton = false;
       this.disableCreateButton = true;
@@ -99,10 +97,8 @@ export class ProfileComponent implements OnInit {
         let data = {
           'email': email
         }
-        this.memberService.searchMyProfile(data).subscribe((res) => {
-          console.log(res);
-          this.getID = (res.data[0]?.id) ? res.data[0]?.id : null;
-          console.log(this.getID)
+        this.memberService.searchMyProfile(data).subscribe((res) => {         
+          this.getID = (res.data[0]?.id) ? res.data[0]?.id : null;         
           this.loader = false;
           if (this.getID > 0) {
             this.userPatchValue(this.getID);
@@ -179,7 +175,6 @@ export class ProfileComponent implements OnInit {
 
   //Create a user profile, if admin insert a record to users table as well.
   createUser() {
-    console.log(this.profileForm.value);
     if (this.profileForm.valid) {
       this.loader = true;
       this.createProfileData();
@@ -193,10 +188,10 @@ export class ProfileComponent implements OnInit {
           this.emailCreate = this.profileForm.get('email').value,
           this.phoneCreate = this.profileForm.get('mobileNo').value,
           this.createProfileUser();
-        this.signUpUsers();
-
+        if (this.errMsgShow !== true) {
+          this.signUpUsers();
+        }
       }
-
     }
     else {
       this.errMsg = "Fill in all the mandatory fields!";
@@ -211,8 +206,7 @@ export class ProfileComponent implements OnInit {
       phone: this.phone,
       email: this.eMail,
     }
-    this.memberService.searchUsers(data).subscribe((res) => {
-      console.log(res.data);
+    this.memberService.searchUsers(data).subscribe((res) => {     
       if (res.data[0].email !== this.eMail) {       
         this.memberService.updateUser(data).subscribe((response) => {
           if (this.userName !== 'Admin') {
@@ -229,9 +223,17 @@ export class ProfileComponent implements OnInit {
   createProfileUser() {
     this.memberService.createProfile(this.profileData).subscribe((res) => {
       this.loader = false;
+      if(res.status !== false){     
       this.successMsg = res.message;
       this.successMsgShow = true;
       this.errMsgShow = false;
+      }
+      else{
+        this.errMsg = res.msg;
+        this.errMsgShow = true;
+        this.successMsgShow = false;
+       
+      }
     }, (err) => {
       this.errMsg = err;
       this.errMsgShow = true;
@@ -249,8 +251,7 @@ export class ProfileComponent implements OnInit {
       password: 'password',
       phone: this.phoneCreate
     }
-    this.service.signup(data).subscribe((res) => {
-      console.log(res, 'res##');
+    this.service.signup(data).subscribe((res) => {     
       if (res.status == true) {
         console.log("User details inserted to database")
       }
@@ -266,8 +267,7 @@ export class ProfileComponent implements OnInit {
   //Update a user profile with the newly provided details.
   updateUserProfile() {
     if (this.profileForm.valid) {
-      this.createProfileData();
-      console.log(this.profileForm.value);
+      this.createProfileData();     
       this.loader = true;
       this.getParamId = this.router.snapshot.paramMap.get('id');     
       if(!this.getParamId){     
@@ -334,9 +334,7 @@ export class ProfileComponent implements OnInit {
   }
 
   // Fill in the details for a user on to the form
-  userPatchValue(id: any) {
-    console.log(id
-    );
+  userPatchValue(id: any) {   
     this.loader = true;
     this.username = '';
     // this.phone = '';

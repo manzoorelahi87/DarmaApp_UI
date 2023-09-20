@@ -38,8 +38,7 @@ export class MembersComponent implements OnInit {
   }
 
   deleteUser(id: any) {
-    this.memberService.deleteProfile(id).subscribe((res) => {
-      console.log(res.message);
+    this.memberService.deleteProfile(id).subscribe((res) => {    
       this.successMsg = res.message;
       this.successMsgShow = true;
       this.errMsgShow = false;
@@ -50,7 +49,6 @@ export class MembersComponent implements OnInit {
   getAllUsers() {
     this.memberService.getMemberDetails().subscribe((res) => {
       this.users = res.data;    
-      console.log(res.message);
     });
   }
 
@@ -74,22 +72,18 @@ export class MembersComponent implements OnInit {
   }
 
   searchUsers() {
-    console.log(this.searchForm.value);
     this.memberService.searchMembers(this.searchForm.value).subscribe((res) => {
-      this.users = res.data;     
-      console.log(res.message);
+      this.users = res.data;    
     })
     this.page = 1;
   }
 
   searchAllUsers() {
-    if (this.searchForm.get('searchText').value !== '') {
-      console.log("search users")
+    if (this.searchForm.get('searchText').value !== '') {     
       this.enableSearchText = true;
       this.searchUsers();
     }
-    else {
-      console.log("get all users")
+    else {    
       this.enableSearchText = false;
       this.getAllUsers();
     }

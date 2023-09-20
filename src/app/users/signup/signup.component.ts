@@ -27,21 +27,18 @@ export class SignupComponent {
   ngOnInit(): void { }
 
   signupSubmit() {
-    if (this.signupForm.valid) {
-      console.log(this.signupForm.value, 'signuform###');
+    if (this.signupForm.valid) {     
       this.errMsgShow = false;
 
       // call api signup
-      this.service.signup(this.signupForm.value).subscribe((res) => {
-        console.log(res, 'res##');
+      this.service.signup(this.signupForm.value).subscribe((res) => {     
         if (res.status == true) {
           const request ={
             'firstname': this.signupForm.get('name').value,
             'mobile': this.signupForm.get('phone').value,
             'email':  this.signupForm.get('email').value
           }
-          this.memberService.createBasicProfile(request).subscribe((response) =>{
-            console.log(response);
+          this.memberService.createBasicProfile(request).subscribe((response) =>{      
             console.log("API call for basic create");
           });
 

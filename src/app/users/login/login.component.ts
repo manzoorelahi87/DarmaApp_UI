@@ -32,13 +32,11 @@ export class LoginComponent {
   {
     if(this.loginForm.valid)
     {
-      console.log(this.loginForm.value,'loginvalue##');
       this.loader = true;
       this.service.login(this.loginForm.value).subscribe((res)=>{
         this.loader = false;
         if(res.status==true)
         {
-          console.log(res,'resss');
           // store data in localStorage
           localStorage.clear();
           localStorage.setItem('token',res.token);
