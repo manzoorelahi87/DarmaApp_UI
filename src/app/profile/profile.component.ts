@@ -355,7 +355,7 @@ export class ProfileComponent implements OnInit {
     this.username = '';
   
     this.memberService.getMyProfile(id).subscribe((res) => {
-      this.loader = false;
+      this.loader = false;      
       // this is to display photo
       this.username = res.data[0].firstname + ' ' + res.data[0].lastname;    
 
@@ -382,9 +382,9 @@ export class ProfileComponent implements OnInit {
         'landlineCode': res.data[0].landcode,
         'landlineNo': res.data[0].landline,
         'email': res.data[0].email,      
-        'dateOfBirth': res.data[0].dob.includes(1899) ? null : this.formatDate(res.data[0].dob),
+        'dateOfBirth': res.data[0]?.dob === null ? null : this.formatDate(res.data[0]?.dob),
         'spouseName': res.data[0].spouse,
-        'spouseDOB': res.data[0].sdob.includes(1899) ? null : this.formatDate(res.data[0].sdob),
+        'spouseDOB': res.data[0]?.sdob === null ? null : this.formatDate(res.data[0]?.sdob),
         'maleChildren': res.data[0].male,
         'femaleChildren': res.data[0].female,
         'notes': res.data[0].notes
