@@ -9,7 +9,10 @@ export class MemberService {
 
   constructor(private http:HttpClient) { }
 
-  apiUrl= "https://darma-association-mclr.onrender.com"
+  // apiUrl= "https://darma-association-mclr.onrender.com"
+  // apiUrl = 'http://localhost:3000';
+
+  apiUrl = "https://darma-assoc.onrender.com";
 
 
   createProfile(data:any):Observable<any>{

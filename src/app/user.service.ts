@@ -9,7 +9,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  apiUrl = "https://darma-association-mclr.onrender.com/user";
+  // apiUrl = "https://darma-association-mclr.onrender.com/user";
+
+  // apiUrl = "http://localhost:3000/user";
+
+  apiUrl = "https://darma-assoc.onrender.com/user";
 
   getAllUsers(): Observable<any> {
     return this.http.get(`${this.apiUrl}`);

@@ -21,7 +21,7 @@ export class ContactComponent {
 
   contactForm = new FormGroup({
     'name': new FormControl('', Validators.required),
-    'email': new FormControl('', [Validators.required, Validators.email]),
+    'email': new FormControl('', [Validators.email]),
     'contact': new FormControl('', Validators.required),
     'message': new FormControl('', Validators.required),
   });
