@@ -16,6 +16,7 @@ export class HomeComponent {
     imageObject = [];
     notificationMessage: any;
     homeContent: any;
+    historyContent: any;
 
     ngOnInit() {
 
@@ -38,6 +39,9 @@ export class HomeComponent {
             }
             if (res[1].section === 'notification'){
                 this.notificationMessage = res[1].content;                
+            }
+            if (res[2].section === 'history'){
+                this.historyContent = res[2].content;                
             }
         });
 

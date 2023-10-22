@@ -1,18 +1,12 @@
-<div class="container">
-
+<div class="container-fluid">
+    <div class="titleWrapper">
+        <h2> Darma - DUBAI AIRPORT RETURNEE MALAYALEE'S ASSOCIATION</h2>
+        <hr />
+        <!-- <div [innerHtml]="homeContent"></div> -->        
+    </div>   
     <div class="alert alert-info">
         <strong>Info!</strong> {{notificationMessage}}
     </div>
-
-
-    <div class="titleWrapper">
-
-        <h2> Darma - DUBAI AIRPORT RETURNEE MALAYALEE'S ASSOCIATION</h2>
-        <hr />
-        <div [innerHtml]="homeContent"></div>
-        
-    </div>
-    <br>
     <div class="assoc">
         <h3> Executive Council</h3>
         <hr />
@@ -39,7 +33,15 @@
                [imageSize]= "{space: 5}" slideImage="1"></ng-image-slider>
         </div>
     </div>
-    <br>
+    <div class="titleWrapper">
+        <h3> Glimpse of Darma</h3>
+        <hr />
+        <div [innerHtml]="historyContent"></div>        
+        <h3> Rules and Regulations</h3>
+        <hr />
+        <div [innerHtml]="homeContent"></div>        
+    </div>
+  
     <div class="pics">
         <h3> Events and Activities</h3>
         <hr />
@@ -79,5 +81,4 @@
         <ng-image-slider #nav [images]="imageObject" [infinite]="false" [autoSlide]="1"
             slideImage="1" [manageImageRatio]=true></ng-image-slider>
     </div>
-
 </div>
