@@ -42,6 +42,7 @@ export class LoginComponent {
           localStorage.setItem('token',res.token);
           localStorage.setItem('username',res.result.name);
           localStorage.setItem('email', res.result.email);
+          localStorage.setItem('phone',res.result.phone);
           this.router.navigate(['home']).then(()=>{
           window.location.reload();
           });

@@ -40,6 +40,8 @@ export class ProfileComponent implements OnInit {
   eMail: string;
   dob;
   sdob;
+  emailDisable;
+  mobileDisable;
 
   profileForm = new FormGroup({
     'firstName': new FormControl('', Validators.required),
@@ -80,7 +82,9 @@ export class ProfileComponent implements OnInit {
 
     //If admin enable the fields 
     let email = localStorage.getItem('email');
-    if (this.userName === 'Admin' || email === '') {
+    let phone = localStorage.getItem('phone');
+    // if (this.userName === 'Admin' || email === '') {
+      if (this.userName === 'Admin' || phone === '') {
       this.enableFields();
     }
     else {
@@ -88,19 +92,23 @@ export class ProfileComponent implements OnInit {
     }
     //Set max date for calendar picker, used for date of birth
     this.maxDate = { year: new Date().getFullYear(), month: 12, day: 31 }
-    this.getParamId = this.router.snapshot.paramMap.get('id');   
-    if (this.getParamId) {    
+    this.getParamId = this.router.snapshot.paramMap.get('id'); 
+    
+    if (this.getParamId) {        
       this.userPatchValue(this.getParamId);
       this.disableUpdateButton = false;
       this.disableCreateButton = true;
     }
     else {
       let email = localStorage.getItem('email');
-      if (email !== 'admin@gmail.com' && email !== '') {
+      let phone = localStorage.getItem('phone');
+      // if (email !== 'admin@gmail.com' && email !== '') {
+        if (email !== 'admin@gmail.com' && phone !== '') {
         this.loader = true;
         let data = {
-          'email': email
+          'email': phone
         }
+       
         this.memberService.searchMyProfile(data).subscribe((res) => {         
           this.getID = (res.data[0]?.id) ? res.data[0]?.id : null;         
           this.loader = false;
@@ -109,7 +117,7 @@ export class ProfileComponent implements OnInit {
             this.disableUpdateButton = false;
             this.disableCreateButton = true;
           }
-          else {
+          else {          
             this.disableUpdateButton = true;
             this.disableCreateButton = false;
           }
@@ -122,7 +130,7 @@ export class ProfileComponent implements OnInit {
         });
 
       }
-      else {
+      else {       
         this.disableUpdateButton = true;
         this.disableCreateButton = false;
       }
@@ -269,8 +277,10 @@ export class ProfileComponent implements OnInit {
   }
 
   //Update a user profile with the newly provided details.
-  updateUserProfile() {
-    if (this.profileForm.valid) {
+  updateUserProfile() { 
+      if( this.profileForm.get('firstName')?.value || this.profileForm.get('lastName')?.value ||	this.profileForm.get('associationUnit')?.value ||
+      this.profileForm.get('mobileNo')?.value
+      ){
       this.createProfileData();     
       this.loader = true;
       this.getParamId = this.router.snapshot.paramMap.get('id');     
@@ -299,16 +309,15 @@ export class ProfileComponent implements OnInit {
 
   // Create data for create user profile
   createProfileData() {
-
     this.phone = this.profileForm.get('mobileNo').value;
     this.eMail = this.profileForm.get('email').value;
-    if(this.profileForm.get('dateOfBirth').value?.year === undefined){
+    if(this.profileForm.get('dateOfBirth').value === undefined || this.profileForm.get('dateOfBirth').value === null){
       this.dob = null;
     }
     else{
       this.dob = this.profileForm.get('dateOfBirth').value?.year + '-' + this.profileForm.get('dateOfBirth').value?.month + '-' + this.profileForm.get('dateOfBirth').value?.day;
     }
-    if(this.profileForm.get('spouseDOB').value?.year === undefined){
+    if(this.profileForm.get('spouseDOB').value === undefined || this.profileForm.get('spouseDOB').value === null){
       this.sdob = null;
     }
     else{
@@ -364,13 +373,13 @@ export class ProfileComponent implements OnInit {
       }
 
       if (res.data[0].email > '') {
-        this.profileForm.get('email')?.disable();
+        this.profileForm.get('email')?.disable();      
       }
 
       if (res.data[0].mobile > '') {
-        this.profileForm.get('mobileNo')?.disable();
-      }
-      
+        this.profileForm.get('mobileNo')?.disable();       
+      }            
+
       this.profileForm.patchValue({
         'firstName': res.data[0].firstname,
         'lastName': res.data[0].lastname,
