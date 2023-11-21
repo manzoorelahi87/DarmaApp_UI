@@ -16,7 +16,10 @@ export class HomeComponent {
     imageObject = [];
     notificationMessage: any;
     homeContent: any;
-    historyContent: any;
+    historyContent: any;   
+    videoObject: Array<object> = [{
+        video: 'assets/Darma.mp4' // Youtube url
+    }];
 
     ngOnInit() {
 
@@ -58,8 +61,14 @@ export class HomeComponent {
                 thumbImage: sub.photoUrl,
                 title: sub.title                
             }
-            this.imageObject.push(data);
+            this.imageObject.push(data);            
         }
+        const data1 = {
+            video: "assets/Darma.mp4",
+            posterImage: this.subEvents[4].photoUrl,
+            title: 'Slideshow 2023'
+        }
+        this.imageObject.push(data1);       
     }
 
     createImageObject() {
@@ -71,29 +80,6 @@ export class HomeComponent {
             }
             this.imageObject1.push(data);
         }
-    }
-    // imageObject = [{
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/5.jpg',
-    //     title: 'Hummingbirds are amazing creatures'
-    // }, {
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/9.jpg'
-    // }, {
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/4.jpg',
-    //     title: 'Example with title.'
-    // }, {
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/7.jpg',
-    //     title: 'Hummingbirds are amazing creatures'
-    // }, {
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/1.jpg'
-    // }, {
-    //     image: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
-    //     thumbImage: 'https://sanjayv.github.io/ng-image-slider/contents/assets/img/slider/2.jpg',
-    //     title: 'Example two with title.'
-    // }];
+    } 
 
 }
