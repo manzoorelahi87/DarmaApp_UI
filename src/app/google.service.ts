@@ -10,7 +10,7 @@ export class GoogleService {
   constructor(private http: HttpClient) { }
 
   public getBoardMemberDetails(): Observable<any> {   
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Board_Directors'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Board_Directors'
     return this.http.get(url)
       .pipe(
         map((res: any) => {
@@ -21,7 +21,7 @@ export class GoogleService {
   }
 
   public getCommitteMembers(): Observable<any> {
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Committee_Members'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Committee_Members'
     return this.http.get(url)
       .pipe(
         map((res: any) => {
@@ -33,7 +33,7 @@ export class GoogleService {
 
 
   public getEventPhotos(): Observable<any> {
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Event_Photos'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Event_Photos'
     return this.http.get(url)
       .pipe(
         map((res: any) => {
@@ -45,7 +45,7 @@ export class GoogleService {
   
 
   public getSubEventPhotos(): Observable<any> {
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Sub_Events_Photos'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Sub_Events_Photos'
     return this.http.get(url)
       .pipe(
         map((res: any) => {          
@@ -55,7 +55,7 @@ export class GoogleService {
   }
 
   public getProfilePhotos(): Observable<any> {
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Member_Photos'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Member_Photos'
     return this.http.get(url)
       .pipe(
         map((res: any) => {
@@ -66,7 +66,7 @@ export class GoogleService {
   }
 
   public getHomeContent(): Observable<any> {
-    const url = 'https://opensheet.elk.sh/1riBNlzGBQqMcFvUU7UEdO1SfRSGIWC5M-kFp3illV0M/Home_Content'
+    const url = 'https://opensheet.elk.sh/1oG2uICsqJM04SB56zxtGncdd26AaD28eWPXTHRJBASg/Home_Content'
     return this.http.get(url)
       .pipe(
         map((res: any) => {      
